@@ -6,7 +6,7 @@ const EventsApp = () => {
 
   const searchForEvent = (event, text) => {
     event.preventDefault();
-    getEvents({description: text})
+    getEvents(text)
       .then(result => console.log(result));
   }
 
