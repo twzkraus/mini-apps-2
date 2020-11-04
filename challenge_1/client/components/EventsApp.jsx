@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from './Search.jsx';
 import { getEvents } from '../../server/json-requests.js';
 
 const EventsApp = () => {
 
+  const [events, setEvents] = useState([]);
+
   const searchForEvent = (event, text) => {
     event.preventDefault();
     getEvents(text)
-      .then(result => console.log(result));
+      .then(result => setEvents(result.data));
   }
 
   return (
