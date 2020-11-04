@@ -11,7 +11,9 @@ const List = ({ events }) => (
         <th>Categorized</th>
       </tr>
     </thead> : ''}
+    <tbody>
     {events.map(event => <Event data={event} />)}
+    </tbody>
   </table>
 );
 
