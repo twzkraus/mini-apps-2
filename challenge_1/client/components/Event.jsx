@@ -9,7 +9,7 @@ const Event = ({ data }) => (
       {data.description}
     </td>
     <td>
-      {data.category1 ? data.category1 + ', ' + data.category2 : ' '}
+      {data.category1 && data.category2 ? data.category1 + ', ' + data.category2 : ' '}
     </td>
   </tr>
 )
