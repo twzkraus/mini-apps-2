@@ -8,10 +8,16 @@ const Search = ({ searchEvents }) => {
     setText(event.target.value);
   }
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    searchEvents(text);
+    setText('');
+  };
+
   return (
     <form>
-      <input type="text" onChange={ (e) => updateText(e) }placeholder="Event Name"></input>
-      <button onClick={(e) => searchEvents(e, text)}>Search</button>
+      <input type="text" onChange={ (e) => updateText(e) } placeholder="Event Name" value={text}></input>
+      <button onClick={(e) => handleSearch(e)}>Search</button>
     </form>
   );
 }

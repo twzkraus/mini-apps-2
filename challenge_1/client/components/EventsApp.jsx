@@ -6,8 +6,7 @@ const EventsApp = () => {
 
   const [events, setEvents] = useState([]);
 
-  const searchForEvent = (event, text) => {
-    event.preventDefault();
+  const searchForEvent = (text) => {
     getEvents(text)
       .then(result => setEvents(result.data));
   }
