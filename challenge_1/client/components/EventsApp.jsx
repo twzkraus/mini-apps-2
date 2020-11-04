@@ -9,10 +9,17 @@ const EventsApp = () => {
   const [events, setEvents] = useState([]);
   const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+  const [perPage, setPerPage] = useState(10);
 
   const searchForEvent = (text) => {
     getEvents(text)
-      .then(result => setEvents(result.data));
+      .then(result => {
+        setEvents(result.data);
+        let numRecords = parseInt(result.headers['x-total-count']);
+        setTotalResults(numRecords);
+        setPageCount(Math.ceil(numRecords / perPage));
+      });
   }
 
   const handlePageChange = (data) => {
@@ -29,7 +36,7 @@ const EventsApp = () => {
           breakClassName={'break-me'}
           pageCount={pageCount}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={perPage}
           onPageChange={handlePageChange}
           containerClassName={'pagination'}
           subContainerClassName={'pages pagination'}
