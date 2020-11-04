@@ -16,7 +16,7 @@ const Search = ({ searchEvents }) => {
 
   return (
     <form>
-      <input type="text" onChange={ (e) => updateText(e) } placeholder="Event Name" value={text}></input>
+      <input type="text" onChange={ (e) => updateText(e) } placeholder="Event Keywords" value={text}></input>
       <button onClick={(e) => handleSearch(e)}>Search</button>
     </form>
   );
