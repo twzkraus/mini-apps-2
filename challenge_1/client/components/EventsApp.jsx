@@ -22,6 +22,10 @@ class EventsApp extends React.Component {
     this.updatePageStats = this.updatePageStats.bind(this);
   }
 
+  componentDidMount() {
+    this.searchForEvent('pineapple', this.state.offset);
+  };
+
   searchForEvent(text, offset) {
     getEvents(text, offset, this.state.perPage)
       .then(result => this.updatePageStats(result, text, offset));
