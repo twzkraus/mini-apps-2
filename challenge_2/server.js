@@ -13,13 +13,17 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/price', (req, res) => {
   fetchCoindesk()
-    .then(result => {
-      const stringified = result.body.readableBuffer.head.data.toString();
-      res.send(stringified);
-      db.addOne(stringified)
-    })
-    .catch((err) => res.send(400));
+    .then(result => result.body.readableBuffer.head.data.toString())
+    .then(stringified => db.addOne(stringified))
+    .then(() => res.redirect('/price_history'))
+    .catch(err => res.sendStatus(400));
 });
+
+app.get('/price_history', (req, res) => {
+  db.getAll()
+    .then(data => res.json(data))
+    .catch(err => res.sendStatus(400));
+})
 
 app.listen(PORT, () => {
   console.log('Express server is running on port', PORT);

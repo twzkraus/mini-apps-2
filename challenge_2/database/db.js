@@ -21,7 +21,6 @@ db.getAll = () => {
 
 db.addOne = (data) => {
   const formattedData = formatRaw(data);
-  debugger;
   return Bitcoin.create(formattedData);
 };
 
