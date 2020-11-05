@@ -6,9 +6,11 @@ import Chart from './components/Chart.jsx';
 
 const baseObj = {
   date: 'Nov 5, 2020 18:44:00 UTC',
-  priceEUR: 12618.5363,
-  priceGBP: 11369.2372,
-  priceUSD: 14894.4183
+  price: {
+    EUR: 12618.5363,
+    GBP: 11369.2372,
+    USD: 14894.4183
+  }
 };
 
 const App = () => {

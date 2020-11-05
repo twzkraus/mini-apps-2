@@ -13,7 +13,7 @@ const Chart = ({ records, currency }) => {
         datasets: [{
           label: 'Bitcoin Price',
           borderColor: 'rgb(255, 99, 132)',
-          data: records.map(rec => rec.priceUSD)
+          data: records.map(rec => rec.price[currency])
         }]
       }
     });
