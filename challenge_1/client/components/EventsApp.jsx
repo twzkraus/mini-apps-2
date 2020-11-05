@@ -11,19 +11,22 @@ const EventsApp = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [perPage, setPerPage] = useState(10);
+  const [searchedTerm, setSearchedTerm] = useState('');
+  const [offset, setOffset] = useState(0);
 
-  const searchForEvent = (text) => {
-    getEvents(text)
+  const searchForEvent = (text, offset, resPerPage) => {
+    getEvents(text, offset, resPerPage)
       .then(result => {
         setEvents(result.data);
         let numRecords = parseInt(result.headers['x-total-count']);
         setTotalResults(numRecords);
         setPageCount(Math.ceil(numRecords / perPage));
+        setSearchedTerm(text);
       });
-  }
+  };
 
   const handlePageChange = (data) => {
-  }
+  };
 
   return (
     <>
