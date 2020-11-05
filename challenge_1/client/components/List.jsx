@@ -12,7 +12,7 @@ const List = ({ events }) => (
       </tr>
     </thead> : ''}
     <tbody>
-    {events.map(event => <Event data={event} />)}
+      {events.map((event, i) => <Event key={i} data={event} />)}
     </tbody>
   </table>
 );
