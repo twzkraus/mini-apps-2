@@ -6,10 +6,11 @@ const db = mongoose.connection;
 
 const bitcoin = new Schema({
   date: String,
-  priceUSD: Number,
-  priceGBP: Number,
-  priceEUR: Number,
-  chart: String,
+  price: {
+    USD: Number,
+    GBP: Number,
+    EUR: Number,
+  }
 });
 
 const Bitcoin = mongoose.model('Bitcoin', bitcoin);
@@ -32,9 +33,11 @@ const formatRaw = (jsonData) => {
   const data = JSON.parse(jsonData);
   return {
     date: data.time.updated,
-    priceUSD: JSON.stringify(data.bpi['USD'].rate_float),
-    priceGBP: JSON.stringify(data.bpi['GBP'].rate_float),
-    priceEUR: JSON.stringify(data.bpi['EUR'].rate_float),
+    price: {
+      USD: data.bpi['USD'].rate_float,
+      GBP: data.bpi['GBP'].rate_float,
+      EUR: data.bpi['EUR'].rate_float,
+    }
   };
 }
 
