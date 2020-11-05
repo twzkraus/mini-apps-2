@@ -19,24 +19,28 @@ class EventsApp extends React.Component {
     }
     this.searchForEvent = this.searchForEvent.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.updatePageStats = this.updatePageStats.bind(this);
   }
 
-  searchForEvent(text, offset, resPerPage) {
-    getEvents(text, offset, resPerPage)
-      .then(result => {
-        let numRecords = parseInt(result.headers['x-total-count']);
-        this.setState({
-          events: result.data,
-          totalResults: numRecords,
-          pageCount: Math.ceil( numRecords / this.state.perPage ),
-          searchedTerm: text,
-          currentPage: this.state.offset / this.state.perPage
-        })
-      });
+  searchForEvent(text, offset) {
+    getEvents(text, offset, this.state.perPage)
+      .then(result => this.updatePageStats(result, text, offset));
+  };
+
+  updatePageStats (dbResult, text, offset) {
+    let numRecords = parseInt(dbResult.headers['x-total-count']);
+    this.setState({
+      events: dbResult.data,
+      pageCount: Math.ceil( numRecords / this.state.perPage ),
+      currentPage: this.state.offset / this.state.perPage,
+      totalResults: numRecords,
+      searchedTerm: text,
+      offset: offset
+    });
   };
 
   handlePageChange(data) {
-    this.searchForEvent(this.state.searchedTerm, data.selected * this.state.perPage, this.state.perPage);
+    this.searchForEvent(this.state.searchedTerm, data.selected * this.state.perPage);
   };
 
   render() {
