@@ -20,7 +20,10 @@ const Chart = ({ records, currency }) => {
   });
 
   return (
+    <>
     <canvas id="chart" ref={chartRef}></canvas>
+    <p>Powered by <a href="https://www.coindesk.com/price/bitcoin">CoinDesk</a></p>
+    </>
   )
 }
 
