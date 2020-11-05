@@ -4,51 +4,62 @@ import Search from './Search.jsx';
 import List from './List.jsx';
 import { getEvents } from '../../server/json-requests.js';
 
-const EventsApp = () => {
+class EventsApp extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const [events, setEvents] = useState([]);
-  const [pageCount, setPageCount] = useState(1);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalResults, setTotalResults] = useState(0);
-  const [perPage, setPerPage] = useState(10);
-  const [searchedTerm, setSearchedTerm] = useState('');
-  const [offset, setOffset] = useState(0);
+    this.state = {
+      events: [],
+      pageCount: 1,
+      currentPage: 0,
+      totalResults: 0,
+      perPage: 10,
+      searchedTerm: '',
+      offset: 0
+    }
+    this.searchForEvent = this.searchForEvent.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
 
-  const searchForEvent = (text, offset, resPerPage) => {
+  searchForEvent(text, offset, resPerPage) {
     getEvents(text, offset, resPerPage)
       .then(result => {
-        setEvents(result.data);
         let numRecords = parseInt(result.headers['x-total-count']);
-        setTotalResults(numRecords);
-        setPageCount(Math.ceil(numRecords / perPage));
-        setSearchedTerm(text);
-        setCurrentPage(offset / perPage);
+        this.setState({
+          events: result.data,
+          totalResults: numRecords,
+          pageCount: Math.ceil( numRecords / this.state.perPage ),
+          searchedTerm: text,
+          currentPage: this.state.offset / this.state.perPage
+        })
       });
   };
 
-  const handlePageChange = (data) => {
-    searchForEvent(searchedTerm, data.selected * perPage, perPage);
+  handlePageChange(data) {
+    this.searchForEvent(this.state.searchedTerm, data.selected * this.state.perPage, this.state.perPage);
   };
 
-  return (
-    <>
-      <Search searchEvents={searchForEvent}/>
-      <List events={events}/>
-      <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={1}
-          pageRangeDisplayed={perPage}
-          onPageChange={handlePageChange}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
-    </>
-  )
-}
+  render() {
+    return (
+      <>
+        <Search searchEvents={this.searchForEvent}/>
+        <List events={this.state.events}/>
+        <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={this.state.perPage}
+            onPageChange={this.handlePageChange}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+      </>
+    );
+  }
+};
 
 export default EventsApp;
