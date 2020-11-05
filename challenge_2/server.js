@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { fetchCoindesk } = require('./fetchCoindesk.js');
+const db = require('./database/db.js');
 
 const app = express();
 
@@ -13,7 +14,9 @@ const PORT = process.env.PORT || 3000;
 app.get('/price', (req, res) => {
   fetchCoindesk()
     .then(result => {
-      res.send(result.body.readableBuffer.head.data.toString());
+      const stringified = result.body.readableBuffer.head.data.toString();
+      res.send(stringified);
+      db.addOne(stringified)
     })
     .catch((err) => res.send(400));
 });
