@@ -1,20 +1,30 @@
 import React, { useState, useCallback } from 'react';
+import fetch from 'node-fetch';
 
 const Event = ({ data }) => {
 
   const [editing, setEditing] = useState(false);
-  const [currentText, setCurrentText] = useState(data.description);
+  const [description, setDescription] = useState(data.description);
 
   const handleStartEdit = () => {
     setEditing(true);
   };
 
   const handleTextEdit = (e) => {
-    setCurrentText(e.target.value);
+    setDescription(e.target.value);
   };
 
   const handleClickSave = (e) => {
     setEditing(false);
+    let tempData = data;
+    data.description = description;
+    fetch('/events', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    })
   };
 
   return (
@@ -25,10 +35,10 @@ const Event = ({ data }) => {
       <td>
         {editing ?
         <>
-          <textarea onChange={handleTextEdit} rows="4" cols="40" value={currentText}></textarea>
+          <textarea onChange={handleTextEdit} rows="4" cols="40" value={description}></textarea>
           <button onClick={handleClickSave}>Update</button>
         </>
-        : <p onClick={handleStartEdit}>{currentText}</p> }
+        : <p onClick={handleStartEdit}>{description}</p> }
 
       </td>
       <td>
