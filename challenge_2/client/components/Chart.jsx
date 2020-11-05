@@ -15,7 +15,7 @@ const Chart = ({ btcData }) => {
         datasets: [{
           label: 'Bitcoin Price',
           borderColor: 'rgb(255, 99, 132)',
-          data: btcData.prices.map(pricePoint => Number(pricePoint[currency].rate.replace(/,/g, '')))
+          data: btcData.prices.map(pricePoint => pricePoint[currency].rate_float)
         }]
       }
     });
