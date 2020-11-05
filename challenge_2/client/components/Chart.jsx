@@ -13,8 +13,26 @@ const Chart = ({ records, currency }) => {
         datasets: [{
           label: 'Bitcoin Price',
           borderColor: 'rgb(255, 99, 132)',
-          data: records.map(rec => rec.price[currency])
+          data: records.map(rec => {
+            return {
+              t: rec.date,
+              y: rec.price[currency]
+            }
+          })
         }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              displayFormats: {
+                hour: 'hA'
+              }
+            },
+            distribution: 'linear',
+          }]
+        }
       }
     });
   });

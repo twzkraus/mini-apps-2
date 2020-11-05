@@ -21,8 +21,8 @@ const App = () => {
     USD: "&#36;",
   };
 
-  const [records, setRecords] = useState([baseObj]);
-  const [currency, setCurrency] = useState('USD');
+  const [records, setRecords] = useState([]);
+  const [currency, setCurrency] = useState('GBP');
 
   const addData = (data) => {
     setRecords(records.concat(data));
