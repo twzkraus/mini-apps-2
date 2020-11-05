@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import ChartJS from 'chart.js';
 
-const Chart = ({ btcData }) => {
+const Chart = ({ records, currency }) => {
 
   const chartRef = React.createRef();
-
-  const [currency, setCurrency] = useState('USD');
 
   useEffect(() => {
     const chart = new ChartJS(chartRef.current.getContext("2d"), {
       type: 'line',
       data: {
-        labels: btcData.dates,
+        labels: records.map(rec => rec.date),
         datasets: [{
           label: 'Bitcoin Price',
           borderColor: 'rgb(255, 99, 132)',
-          data: btcData.prices.map(pricePoint => pricePoint[currency].rate_float)
+          data: records.map(rec => rec.priceUSD)
         }]
       }
     });
