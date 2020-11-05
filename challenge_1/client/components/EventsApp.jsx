@@ -8,7 +8,7 @@ const EventsApp = () => {
 
   const [events, setEvents] = useState([]);
   const [pageCount, setPageCount] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [searchedTerm, setSearchedTerm] = useState('');
@@ -22,10 +22,12 @@ const EventsApp = () => {
         setTotalResults(numRecords);
         setPageCount(Math.ceil(numRecords / perPage));
         setSearchedTerm(text);
+        setCurrentPage(offset / perPage);
       });
   };
 
   const handlePageChange = (data) => {
+    searchForEvent(searchedTerm, data.selected * perPage, perPage);
   };
 
   return (
