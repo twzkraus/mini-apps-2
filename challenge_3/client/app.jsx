@@ -23,11 +23,11 @@ const App = () => {
   const addScore = (value) => {
     let scoresCopy = scores.slice();
     let currentFrame = scoresCopy[currentFrameIdx];
-    if (!currentFrame.rollOne) {
-      currentFrame.rollOne = value;
-    } else {
+    if (currentFrame.rollOne || value === 10) {
       currentFrame.rollTwo = value;
       incrementCurrentFrame();
+    } else {
+      currentFrame.rollOne = value;
     }
     setScores(scoresCopy);
   };
