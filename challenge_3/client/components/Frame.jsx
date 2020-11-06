@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const Box = styled.div`
   display: inline-block;
   border: 1px solid black;
-  height: ${props => props.outer ? '100px' : '10px'};
-  width: ${props => props.outer ? '100px' : '10px'};
+  height: ${props => props.outer ? '100px' : '20px'};
+  width: ${props => props.outer ? '100px' : '20px'};
 `;
 
 const Frame = ({ score }) => (
