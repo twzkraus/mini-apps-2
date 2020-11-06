@@ -29,7 +29,6 @@ app.get('/price_history', (req, res) => {
 });
 
 const respondWithHistorical = (req, res) => {
-  debugger;
   fetchHistorical(req.query.start, req.query.end)
     .then(data => res.json(data))
     .catch(err => res.sendStatus(400));
