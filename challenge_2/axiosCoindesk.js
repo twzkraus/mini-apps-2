@@ -9,8 +9,6 @@ module.exports = {
   fetchHistorical: (start, end) => {
     let histURL = `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start}&end=${end}`;
     return axios.get(histURL)
-      .then(result => {
-        return result.data;
-      });
+      .then(result => result.data);
   }
 };
