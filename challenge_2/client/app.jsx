@@ -17,9 +17,9 @@ const baseObj = {
 const App = () => {
 
   const symbols = [
-    {GBP: 65505},
-    {EUR: 8364},
-    {USD: 36},
+    { GBP: 65505 },
+    { EUR: 8364 },
+    { USD: 36 },
   ];
 
   const [records, setRecords] = useState([]);
@@ -34,10 +34,14 @@ const App = () => {
       .then(results => addData(results.data));
   }, []);
 
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+
   return (
     <div>
       <Chart records={records} currency={currency}/>
-      <CurrencySelector currency={currency} symbols={symbols}/>
+      <CurrencySelector currency={currency} symbols={symbols} handleChange={handleCurrencyChange}/>
     </div>
   )
 }

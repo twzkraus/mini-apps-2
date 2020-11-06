@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CurrencySelector = ({ currency, symbols }) => {
+const CurrencySelector = ({ currency, symbols, handleChange }) => {
 
   const getRadioAndLabel = (obj) => {
     let checked = currency === Object.keys(obj)[0];
@@ -8,7 +8,7 @@ const CurrencySelector = ({ currency, symbols }) => {
 
     return (
       <>
-        <input type="radio" id={val} name="currency" value={val} checked={checked}/>
+        <input type="radio" id={val} name="currency" value={Object.keys(obj)[0]} checked={checked} onClick={handleChange}/>
         <label for={val}>{String.fromCharCode(val)}</label>
       </>
     )
