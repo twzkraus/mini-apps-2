@@ -10,8 +10,8 @@ const DateSelector = ({ handleSubmit }) => {
   return (
     <>
     <p>Select a date range:</p>
-      <input type="date" id="start-date" value={aMonthAgo}/>
-      <input type="date" id="end-date" value={today}/>
+      <input type="date" id="start-date" defaultValue={aMonthAgo}/>
+      <input type="date" id="end-date" defaultValue={today}/>
       <button onClick={(e) => handleSubmit(e, dates)}>Submit</button>
     </>
   );
