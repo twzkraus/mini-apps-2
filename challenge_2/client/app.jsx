@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import fetch from 'node-fetch';
 import Chart from './components/Chart.jsx';
+import CurrencySelector from './components/CurrencySelector.jsx';
 
 const baseObj = {
   date: 'Nov 5, 2020 18:44:00 UTC',
@@ -15,11 +16,11 @@ const baseObj = {
 
 const App = () => {
 
-  const symbols = {
-    GBP: "&pound;",
-    EUR: "&euro;",
-    USD: "&#36;",
-  };
+  const symbols = [
+    {GBP: 65505},
+    {EUR: 8364},
+    {USD: 36},
+  ];
 
   const [records, setRecords] = useState([]);
   const [currency, setCurrency] = useState('GBP');
@@ -36,6 +37,7 @@ const App = () => {
   return (
     <div>
       <Chart records={records} currency={currency}/>
+      <CurrencySelector currency={currency} symbols={symbols}/>
     </div>
   )
 }
