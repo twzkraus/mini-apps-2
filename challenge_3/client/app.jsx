@@ -16,20 +16,34 @@ const App = () => {
   const [ scores, setScores ] = useState(oneToTen.map(a => JSON.parse(JSON.stringify(emptyFrame))));
   const [ currentFrameIdx, setCurrentFrameIdx ] = useState(0);
 
-  const incrementCurrentFrame = () => {
+  const handleChangeFrame = () => {
     setCurrentFrameIdx(currentFrameIdx + 1);
   };
 
   const addScore = (value) => {
+    const scoresWithVal = addScoreToNextPos(value);
+    const scoresWithTot = updateTotal();
+    setScores(scoresWithTot);
+    if (scoresWithTot[currentFrameIdx].rollTwo || value === 10) { handleChangeFrame() };
+  };
+
+  const addScoreToNextPos = (value) => {
     let scoresCopy = scores.slice();
     let currentFrame = scoresCopy[currentFrameIdx];
     if (currentFrame.rollOne || value === 10) {
       currentFrame.rollTwo = value;
-      incrementCurrentFrame();
     } else {
       currentFrame.rollOne = value;
     }
-    setScores(scoresCopy);
+    return scoresCopy;
+  };
+
+  const updateTotal = () => {
+    let scoresCopy = scores.slice();
+    let currentFrame = scoresCopy[currentFrameIdx];
+    let prevFrame = scoresCopy[currentFrameIdx - 1] || { total: 0 };
+    currentFrame.total = prevFrame.total + currentFrame.rollOne + currentFrame.rollTwo;
+    return scoresCopy;
   };
 
   return (
