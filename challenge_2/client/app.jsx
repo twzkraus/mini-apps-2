@@ -4,6 +4,7 @@ import axios from 'axios';
 import fetch from 'node-fetch';
 import Chart from './components/Chart.jsx';
 import CurrencySelector from './components/CurrencySelector.jsx';
+import DateSelector from './components/DateSelector.jsx';
 
 const baseObj = {
   date: 'Nov 5, 2020 18:44:00 UTC',
@@ -13,6 +14,9 @@ const baseObj = {
     USD: 14894.4183
   }
 };
+
+const GUconv = baseObj.price.GBP / baseObj.price.USD;
+const EUconv = baseObj.price.EUR / baseObj.price.USD;
 
 const App = () => {
 
@@ -29,6 +33,11 @@ const App = () => {
     setRecords(records.concat(data));
   };
 
+  const overwriteData = (data) => {
+    debugger;
+    setRecords(data);
+  }
+
   useEffect(() => {
     axios.get('/price')
       .then(results => addData(results.data));
@@ -38,10 +47,42 @@ const App = () => {
     setCurrency(event.target.value);
   };
 
+  const getGbpEur = (USD) => {
+    return {
+      USD,
+      GBP: USD * GUconv,
+      EUR: USD * EUconv
+    }
+  };
+
+  const parseDateRangeData = (data) => {
+    // data come in in object form with just date & price. Price is in USD.
+    let result = [];
+    for (let key in data) {
+      let dayObj = {
+        date: key,
+        price: getGbpEur(data[key])
+      }
+      result.push(dayObj);
+    }
+    return result;
+  }
+
+  const handleDateChange = (event) => {
+    event.preventDefault();
+    let start = document.getElementById("start-date").value;
+    let end = document.getElementById("end-date").value;
+    axios.get(`/price?start=${start}&end=${end}`)
+      .then(results => {
+        overwriteData(parseDateRangeData(results.data.bpi))
+      });
+  };
+
   return (
     <div>
       <Chart records={records} currency={currency}/>
       <CurrencySelector currency={currency} symbols={symbols} handleChange={handleCurrencyChange}/>
+      <DateSelector handleSubmit={handleDateChange}/>
     </div>
   )
 }
