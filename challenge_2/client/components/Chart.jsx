@@ -5,6 +5,29 @@ const Chart = ({ records, currency }) => {
 
   const chartRef = React.createRef();
 
+  const timeOptions = {
+    scales: {
+      xAxes: [{
+        type: 'time',
+        time: {
+          displayFormats: {
+            hour: 'hA'
+          }
+        },
+        distribution: 'linear',
+      }]
+    }
+  };
+
+  const getXYFromRecords = (records) => {
+    return records.map(rec => {
+      return {
+        t: rec.date,
+        y: rec.price[currency]
+      }
+    });
+  }
+
   useEffect(() => {
     const chart = new ChartJS(chartRef.current.getContext("2d"), {
       type: 'line',
@@ -13,27 +36,10 @@ const Chart = ({ records, currency }) => {
         datasets: [{
           label: 'Bitcoin Price',
           borderColor: 'rgb(255, 99, 132)',
-          data: records.map(rec => {
-            return {
-              t: rec.date,
-              y: rec.price[currency]
-            }
-          })
+          data: getXYFromRecords(records),
         }]
       },
-      options: {
-        scales: {
-          xAxes: [{
-            type: 'time',
-            time: {
-              displayFormats: {
-                hour: 'hA'
-              }
-            },
-            distribution: 'linear',
-          }]
-        }
-      }
+      options: timeOptions,
     });
   });
 
