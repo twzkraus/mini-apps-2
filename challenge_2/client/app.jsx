@@ -38,8 +38,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    axios.get('/price')
-      .then(results => addData(results.data));
+    handleConfirmDates();
   }, []);
 
   const handleCurrencyChange = (event) => {
@@ -67,8 +66,8 @@ const App = () => {
     return result;
   }
 
-  const handleDateChange = (event) => {
-    event.preventDefault();
+  const handleConfirmDates = (event) => {
+    if (event) { event.preventDefault() }
     let start = document.getElementById("start-date").value;
     let end = document.getElementById("end-date").value;
     axios.get(`/price?start=${start}&end=${end}`)
@@ -81,7 +80,7 @@ const App = () => {
     <div>
       <Chart records={records} currency={currency}/>
       <CurrencySelector currency={currency} symbols={symbols} handleChange={handleCurrencyChange}/>
-      <DateSelector handleSubmit={handleDateChange}/>
+      <DateSelector handleSubmit={handleConfirmDates}/>
     </div>
   )
 }
