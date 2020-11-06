@@ -13,11 +13,24 @@ const oneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const App = () => {
 
-  const [ scores, setScores ] = useState(oneToTen.map(a => emptyFrame));
+  const [ scores, setScores ] = useState(oneToTen.map(a => JSON.parse(JSON.stringify(emptyFrame))));
+  const [ currentFrameIdx, setCurrentFrameIdx ] = useState(0);
+
+  const incrementCurrentFrame = () => {
+    setCurrentFrameIdx(currentFrameIdx + 1);
+  };
 
   const addScore = (value) => {
-    console.log(value);
-  }
+    let scoresCopy = scores.slice();
+    let currentFrame = scoresCopy[currentFrameIdx];
+    if (!currentFrame.rollOne) {
+      currentFrame.rollOne = value;
+    } else {
+      currentFrame.rollTwo = value;
+      incrementCurrentFrame();
+    }
+    setScores(scoresCopy);
+  };
 
   return (
     <>
