@@ -11,10 +11,10 @@ const Box = styled.div`
 const Frame = ({ score }) => (
   <Box outer>
     <div className="turn-score">
-      <Box className="roll-1-score"></Box>
-      <Box className="roll-2-score"></Box>
+      <Box className="roll-1-score">{score.rollOne}</Box>
+      <Box className="roll-2-score">{score.rollTwo}</Box>
     </div>
-    <Box className="running-total-score"></Box>
+    <Box className="running-total-score">{score.total}</Box>
   </Box>
 );
 

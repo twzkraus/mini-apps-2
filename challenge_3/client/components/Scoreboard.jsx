@@ -3,7 +3,7 @@ import Frame from './Frame.jsx';
 
 const Scoreboard = ({ scores }) => (
   <div>
-    {scores.map(score => <Frame score={score}/>)}
+    {scores.map((score, i) => <Frame score={score} key={i}/>)}
   </div>
 );
 
