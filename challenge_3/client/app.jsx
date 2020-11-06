@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PinSelector from './components/PinSelector.jsx';
+import Scoreboard from './components/Scoreboard.jsx';
 
 const App = () => {
   const addScore = (value) => {
@@ -8,7 +9,10 @@ const App = () => {
   }
 
   return (
-    <PinSelector addScore={addScore}/>
+    <>
+      <PinSelector addScore={addScore}/>
+      <Scoreboard scores={[1, 2, 3, 4, 5]}/>
+    </>
   );
 }
 
