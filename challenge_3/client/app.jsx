@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <>
-      <PinSelector addScore={addScore}/>
+      <PinSelector addScore={addScore} maxAvail={10 - scores[currentFrameIdx].rollOne}/>
       <Scoreboard scores={scores}/>
     </>
   );
