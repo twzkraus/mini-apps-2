@@ -7,10 +7,10 @@ const CurrencySelector = ({ currency, symbols, handleChange }) => {
     let val = Object.values(obj)[0];
 
     return (
-      <>
-        <input type="radio" id={val} name="currency" value={Object.keys(obj)[0]} checked={checked} onClick={handleChange}/>
-        <label for={val}>{String.fromCharCode(val)}</label>
-      </>
+      <React.Fragment key={val}>
+        <input type="radio" id={val} name="currency" value={Object.keys(obj)[0]} checked={checked} onChange={handleChange}/>
+        <label htmlFor={val}>{String.fromCharCode(val)}</label>
+      </React.Fragment>
     )
   }
 
