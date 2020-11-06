@@ -34,9 +34,8 @@ const App = () => {
   };
 
   const overwriteData = (data) => {
-    debugger;
     setRecords(data);
-  }
+  };
 
   useEffect(() => {
     axios.get('/price')
