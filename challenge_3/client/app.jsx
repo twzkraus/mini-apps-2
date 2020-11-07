@@ -30,7 +30,7 @@ const App = () => {
   const addScoreToNextPos = (value) => {
     let scoresCopy = scores.slice();
     let currentFrame = scoresCopy[currentFrameIdx];
-    if (currentFrame.rollOne || value === 10) {
+    if (currentFrame.rollOne) {
       currentFrame.rollTwo = value;
     } else {
       currentFrame.rollOne = value;
